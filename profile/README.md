@@ -4,7 +4,7 @@
 
 ### Inteligência, padronização e conhecimento aplicado ao contencioso trabalhista
 
-Repositório central de conhecimento e navegação para análises trabalhistas estruturadas por cliente.
+Organização central de conhecimento, regras e análises trabalhistas estruturadas por cliente.
 
 </div>
 
@@ -12,132 +12,343 @@ Repositório central de conhecimento e navegação para análises trabalhistas e
 
 ## 🧠 Sobre o Work Brain
 
-O **Work Brain Trabalhista** organiza conhecimento, regras e análises relacionadas ao contencioso trabalhista de forma estruturada, reproduzível e específica para cada cliente.
+O **Work Brain Trabalhista** organiza conhecimento, regras de negócio, fontes de dados e análises relacionadas ao contencioso trabalhista de forma estruturada, reproduzível e específica para cada cliente.
 
-A organização funciona como uma camada central de inteligência: cada cliente possui seu próprio contexto, critérios, particularidades processuais e regras de análise.
+A arquitetura parte de um princípio simples:
 
-Por isso, o conhecimento não é tratado como uma única regra universal.
+> **Cada cliente possui seu próprio contexto e sua própria fonte de verdade.**
 
-Cada análise é executada a partir de um **ruleset específico**, selecionado de acordo com o cliente ao qual o caso pertence.
+Por isso:
+
+- **um repositório representa um cliente;**
+- **um ruleset concentra o conhecimento compartilhado daquele cliente;**
+- **cada análise representa uma pergunta ou problema específico;**
+- **connectors definem como os dados são obtidos;**
+- **prompts definem como modelos de linguagem devem trabalhar, quando aplicável.**
 
 ```mermaid
-flowchart LR
-    A[Entrada / Caso] --> B{Cliente}
+flowchart TD
+    A["🏢 Cliente"]
+    B["📐 Ruleset"]
+    D["🔌 Fontes de dados"]
 
-    B -->|Cliente A| C[Ruleset A]
-    B -->|Cliente B| D[Ruleset B]
-    B -->|Cliente C| E[Ruleset C]
+    subgraph C["📊 Análises"]
+        E["Análise A"]
+        F["Análise B"]
+        G["Análise C"]
+    end
 
-    C --> F[Análise]
-    D --> F
-    E --> F
+    H["📦 Resultados"]
 
-    F --> G[Resultado estruturado]
+    A -->|"define contexto"| B
+    A -->|"possui"| D
+    A -->|"contém"| C
+
+    B -->|"regras"| E
+    B -->|"regras"| F
+    B -->|"regras"| G
+
+    D -->|"dados"| E
+    D -->|"dados"| F
+    D -->|"dados"| G
+
+    E -->|"gera"| H
+    F -->|"gera"| H
+    G -->|"gera"| H
+
+    classDef client fill:#1f4e79,color:#fff,stroke:#163a5a,stroke-width:1px;
+    classDef ruleset fill:#6a1b9a,color:#fff,stroke:#4a136d,stroke-width:1px;
+    classDef datasource fill:#ef6c00,color:#fff,stroke:#b45309,stroke-width:1px;
+    classDef analysis fill:#1565c0,color:#fff,stroke:#0d47a1,stroke-width:1px;
+    classDef result fill:#2e7d32,color:#fff,stroke:#1b5e20,stroke-width:1px;
+
+    class A client;
+    class B ruleset;
+    class D datasource;
+    class E,F,G analysis;
+    class H result;
 ```
+
+
+---
+
+## 📚 Documentação
+
+A documentação do Work Brain é dividida em dois níveis:
+
+- **[RULEBOOK.md](https://github.com/work-brain-trabalhista/.github/blob/main/RULEBOOK.md)** — arquitetura, convenções e regras para criar clientes, analyses, rulesets, connectors e prompts.
+- **README de cada cliente** — contexto específico, análises disponíveis, fontes de dados e instruções de execução daquele cliente.
+
+> O README desta organização funciona como mapa.  
+> O Rulebook define como o sistema deve ser construído.
 
 ---
 
 ## 🗂️ Clientes
 
-Cada cliente possui um repositório próprio contendo seu contexto, regras, análises e documentação.
+Cada cliente possui um repositório próprio e independente.
 
-| Cliente | Repositório | Ruleset | Status |
-|---|---|---|---|
-| **Cliente A** | [`cliente-a`](../cliente-a) | `ruleset_cliente_a` | 🟢 Ativo |
-| **Cliente B** | [`cliente-b`](../cliente-b) | `ruleset_cliente_b` | 🟢 Ativo |
-| **Cliente C** | [`cliente-c`](../cliente-c) | `ruleset_cliente_c` | 🟡 Em desenvolvimento |
+| Cliente | Repositório | Análises | Status |
+|---|---|---:|---|
+| **Zamp** | [`work-brain-zamp`](https://github.com/work-brain-trabalhista/work-brain-zamp) | 1+ | 🟢 Ativo |
+| **Cliente B** | `work-brain-cliente-b` | — | ⚪ Futuro |
+| **Cliente C** | `work-brain-cliente-c` | — | ⚪ Futuro |
 
-> Cada repositório possui seu próprio `README.md` com documentação detalhada sobre contexto, regras de negócio, fontes de dados, análises disponíveis e particularidades daquele cliente.
+> O README de cada cliente funciona como índice para todas as análises disponíveis naquele contexto.
 
 ---
 
-## 🧩 Como o conhecimento é organizado
+## 🧩 Arquitetura
 
-A arquitetura do Work Brain separa o que é **comum ao domínio trabalhista** daquilo que é **específico de cada cliente**.
+A organização segue a estrutura:
 
 ```text
-work-brain-trabalhista/
+GitHub Organization · work-brain-trabalhista
 │
-├── cliente-a/
+├── .github
+│   ├── RULEBOOK.md
+│   │
+│   └── profile/
+│       └── README.md
+│
+├── work-brain-zamp
 │   ├── README.md
 │   ├── ruleset/
 │   ├── analyses/
 │   ├── prompts/
 │   ├── docs/
-│   └── examples/
+│   └── tests/
 │
-├── cliente-b/
+├── work-brain-cliente-b
 │   ├── README.md
 │   ├── ruleset/
 │   ├── analyses/
 │   ├── prompts/
 │   ├── docs/
-│   └── examples/
+│   └── tests/
 │
-└── .github/
-    └── profile/
-        └── README.md      ← você está aqui
+└── work-brain-core
+    └── futuro, caso componentes realmente compartilhados
+        entre clientes sejam identificados
 ```
 
-### Fluxo de análise
+### Modelo mental
 
-```mermaid
-flowchart TD
-    A[Nova análise] --> B[Identificar cliente]
-    B --> C[Carregar contexto do cliente]
-    C --> D[Selecionar Ruleset]
-    D --> E[Aplicar regras e critérios]
-    E --> F[Executar análise]
-    F --> G[Validar resultado]
-    G --> H[Resultado final]
+```text
+ORGANIZAÇÃO
+     │
+     └── CLIENTE
+            │
+            ├── RULESET
+            │      conhecimento compartilhado
+            │
+            ├── CONNECTORS
+            │      acesso aos dados
+            │
+            ├── ANALYSES
+            │      ├── pergunta A
+            │      ├── pergunta B
+            │      └── pergunta C
+            │
+            ├── PROMPTS
+            │      instruções para LLMs
+            │
+            └── DOCS
+                   contexto complementar
 ```
 
 ---
 
 ## 📐 Rulesets
 
-Um **ruleset** representa o conjunto de regras, critérios e interpretações necessárias para analisar casos de determinado cliente.
+Cada cliente possui um **ruleset próprio**, que funciona como a fonte estruturada de conhecimento compartilhado entre suas análises.
 
-Ele pode contemplar, por exemplo:
+O ruleset concentra definições e regras que devem permanecer consistentes independentemente da análise executada.
 
 | Categoria | Exemplos |
 |---|---|
-| **Regras jurídicas** | teses, critérios processuais, entendimentos aplicáveis |
-| **Regras do cliente** | estratégias, políticas internas e critérios específicos |
-| **Classificação** | categorias, tags, risco, probabilidade e prioridade |
-| **Dados** | campos obrigatórios, normalizações e tratamentos |
-| **Análise** | critérios utilizados para chegar às conclusões |
-| **Saída** | estrutura esperada para relatórios e resultados |
-
-O objetivo é garantir que uma análise realizada para um cliente utilize **exatamente o contexto e os critérios daquele cliente**, evitando que regras sejam aplicadas indevidamente entre operações diferentes.
-
----
-
-## 🏗️ Estrutura de um repositório de cliente
-
-Cada repositório deve funcionar como uma unidade autossuficiente de conhecimento.
+| **Identificação** | aliases, IDs e nomenclaturas do cliente |
+| **Dados** | mappings de campos, normalizações e classificações |
+| **Regras de negócio** | definição de acordo, critérios específicos, políticas |
+| **Thresholds** | limites financeiros, faixas e critérios de decisão |
+| **Classificações** | categorias, tags, prioridades e status |
+| **Exceções** | situações que modificam ou sobrescrevem regras padrão |
 
 Exemplo:
 
 ```text
-cliente-x/
+Ruleset Zamp
+     │
+     ├── Agreement Count
+     ├── Average Agreement Value
+     ├── Provision Analysis
+     └── Risk Analysis
+```
+
+A regra prática é:
+
+> **Se uma definição precisa permanecer igual entre várias análises do mesmo cliente, ela provavelmente pertence ao ruleset.**
+
+### Ruleset não é Analysis
+
+```text
+"Status homologado é considerado acordo."
+                    │
+                    ▼
+                 RULESET
+```
+
+```text
+"Quantos acordos ocorreram?"
+                    │
+                    ▼
+                 ANALYSIS
+```
+
+Também não deve ser confundido com prompt ou connector:
+
+```text
+Ruleset
+→ conhecimento e regras
+
+Analysis
+→ pergunta que queremos responder
+
+Connector
+→ como os dados são obtidos
+
+Prompt
+→ como uma LLM deve trabalhar
+```
+
+---
+
+## 📊 Analyses
+
+Uma **analysis** representa uma pergunta, problema ou resultado específico que queremos produzir dentro do contexto de um cliente.
+
+Exemplos:
+
+```text
+Quantos acordos ocorreram?
+
+Qual o valor médio dos acordos?
+
+Qual a taxa de acordo?
+
+Qual o volume de processos?
+
+Qual a exposição financeira?
+
+Quais processos apresentam maior risco?
+```
+
+Cada análise deve existir dentro de:
+
+```text
+analyses/
+```
+
+Exemplo:
+
+```text
+work-brain-zamp/
+│
+└── analyses/
+    ├── agreement_count/
+    │   ├── README.md
+    │   └── analysis.py
+    │
+    ├── average_agreement_value/
+    │   ├── README.md
+    │   └── analysis.py
+    │
+    └── risk_analysis/
+        ├── README.md
+        └── analysis.py
+```
+
+Cada análise reutiliza, sempre que aplicável, o mesmo ruleset e a mesma infraestrutura do cliente.
+
+---
+
+## 🔌 Connectors
+
+Connectors são responsáveis exclusivamente por acessar fontes de dados.
+
+Exemplos:
+
+```text
+Metabase
+PostgreSQL
+API interna
+CSV
+Google Sheets
+```
+
+O fluxo esperado é:
+
+```mermaid
+flowchart LR
+    A["Fonte de dados"] --> B["Connector"]
+    B --> C["Dados"]
+    C --> D["Ruleset"]
+    D --> E["Analysis"]
+    E --> F["Resultado"]
+```
+
+Um connector deve saber:
+
+> **Como buscar os dados?**
+
+Ele não deve decidir:
+
+> **O que é um acordo?**  
+> **Qual processo é de alto risco?**  
+> **Qual regra específica do cliente deve ser aplicada?**
+
+Essas responsabilidades pertencem ao ruleset e à análise.
+
+---
+
+## 🏗️ Estrutura padrão de um cliente
+
+Um repositório deve seguir aproximadamente:
+
+```text
+work-brain-<client>/
 │
 ├── README.md
+├── pyproject.toml
+├── .env.example
+├── .gitignore
 │
 ├── ruleset/
 │   ├── README.md
-│   ├── rules.yaml
-│   └── definitions.md
+│   └── <client>.yaml
 │
 ├── analyses/
+│   ├── README.md
+│   │
 │   ├── analysis_a/
+│   │   ├── README.md
+│   │   └── analysis.py
+│   │
 │   └── analysis_b/
+│       ├── README.md
+│       └── analysis.py
+│
+├── src/
+│   └── work_brain/
+│       ├── config.py
+│       ├── ruleset.py
+│       └── connectors/
 │
 ├── prompts/
 │
 ├── docs/
 │
-├── examples/
+├── fixtures/
 │
 └── tests/
 ```
@@ -146,110 +357,192 @@ O `README.md` do cliente deve ser o **ponto inicial para qualquer pessoa ou agen
 
 ---
 
-## 🔎 Navegação
+## 🧭 Onde cada coisa deve ficar?
 
-```mermaid
-flowchart TD
-    HOME["🏠 Work Brain Trabalhista"]
+| Pergunta | Lugar |
+|---|---|
+| Mudou porque mudou o cliente? | `ruleset/` |
+| Mudou porque mudou a pergunta? | `analyses/` |
+| Mudou porque mudou a fonte de dados? | `connectors/` |
+| É instrução para uma LLM? | `prompts/` |
+| É documentação complementar? | `docs/` |
+| É código realmente compartilhado? | `src/` |
+| É validação de comportamento? | `tests/` |
 
-    HOME --> A["🏢 Cliente A"]
-    HOME --> B["🏢 Cliente B"]
-    HOME --> C["🏢 Cliente C"]
+Em forma resumida:
 
-    A --> AR["📐 Ruleset"]
-    A --> AA["📊 Análises"]
-    A --> AD["📚 Documentação"]
+```text
+Mudou o cliente?
+→ RULESET
 
-    B --> BR["📐 Ruleset"]
-    B --> BA["📊 Análises"]
-    B --> BD["📚 Documentação"]
+Mudou a pergunta?
+→ ANALYSIS
 
-    C --> CR["📐 Ruleset"]
-    C --> CA["📊 Análises"]
-    C --> CD["📚 Documentação"]
+Mudou a fonte?
+→ CONNECTOR
+
+Mudou a instrução para IA?
+→ PROMPT
+
+É explicação?
+→ DOCS
 ```
 
 ---
 
-## 📋 Contrato mínimo de cada repositório
+## 📋 Contrato mínimo de um repositório
 
-Para manter o Work Brain consistente, cada repositório de cliente deve documentar:
+Cada cliente deve documentar:
 
 | Área | O que deve estar definido |
 |---|---|
-| **Contexto** | quem é o cliente e qual problema está sendo analisado |
-| **Escopo** | quais processos, documentos ou situações estão contemplados |
-| **Ruleset** | regras utilizadas nas análises |
-| **Dados** | fontes e estrutura das informações utilizadas |
-| **Análises** | quais análises estão disponíveis |
-| **Saídas** | formato e significado dos resultados |
-| **Validação** | como verificar se a análise está funcionando corretamente |
+| **Contexto** | quem é o cliente e qual o contexto da operação |
+| **Ruleset** | conhecimento e regras compartilhadas |
+| **Dados** | fontes, schemas e mappings utilizados |
+| **Análises** | perguntas e soluções disponíveis |
+| **Prompts** | instruções para LLMs, quando aplicável |
+| **Saídas** | estrutura e significado dos resultados |
+| **Validação** | como verificar regras e análises |
 | **Limitações** | situações não contempladas ou que exigem revisão humana |
-
----
-
-## 🧭 Princípios
-
-> **Contexto antes de análise.**  
-> Nenhuma regra deve ser aplicada sem identificar primeiro o cliente e o contexto ao qual a análise pertence.
-
-> **Rulesets são explícitos.**  
-> Critérios relevantes não devem depender apenas de conhecimento implícito de quem desenvolveu a análise.
-
-> **Análises devem ser reproduzíveis.**  
-> Deve ser possível entender quais dados, regras e versões produziram determinado resultado.
-
-> **Cliente é uma fronteira de conhecimento.**  
-> Uma regra válida para um cliente não deve automaticamente ser considerada válida para outro.
-
-> **Documentação faz parte da solução.**  
-> Cada análise deve ser compreensível por pessoas que não participaram de sua criação.
-
----
-
-## 🔐 Segurança e confidencialidade
-
-Os repositórios desta organização podem conter conhecimento interno relacionado a operações de contencioso trabalhista.
-
-Não devem ser adicionados ao código ou à documentação:
-
-- credenciais, tokens ou secrets;
-- dados pessoais desnecessários;
-- documentos processuais completos quando não forem necessários;
-- informações confidenciais fora do escopo da análise.
-
-Sempre que possível, exemplos devem utilizar dados fictícios ou anonimizados.
 
 ---
 
 ## 🚀 Criando uma nova análise
 
-Uma nova análise deve nascer dentro do repositório do cliente ao qual pertence.
+Uma análise nova deve nascer **dentro do repositório do cliente**.
 
 ```text
 Cliente
    ↓
+Problema / pergunta
+   ↓
+Dados
+   ↓
 Ruleset
    ↓
-Problema / hipótese
-   ↓
-Análise
+Analysis
    ↓
 Validação
    ↓
-Documentação
-   ↓
-Disponibilização
+Resultado
 ```
 
-Quando uma solução demonstrar ser suficientemente genérica para múltiplos clientes, ela pode posteriormente ser abstraída para uma camada compartilhada.
+Por exemplo:
+
+```text
+work-brain-zamp/
+│
+└── analyses/
+    └── agreement_count/
+```
+
+e não:
+
+```text
+zamp-agreement-count/
+```
+
+como um novo repositório.
+
+Para instruções completas sobre criação de análises e novos clientes, consulte o **[Work Brain Rulebook](https://github.com/work-brain-trabalhista/.github/blob/main/RULEBOOK.md)**.
+
+---
+
+## 🧭 Princípios
+
+> **Context before analysis.**  
+> Primeiro entenda o cliente e o contexto. Depois aplique regras e execute a análise.
+
+> **Explicit rules over implicit knowledge.**  
+> Conhecimento importante não deve existir apenas na cabeça de quem escreveu o código.
+
+> **One client, one source of truth.**  
+> As regras compartilhadas de um cliente devem possuir uma fonte de verdade clara.
+
+> **Analyses should be reproducible.**  
+> Deve ser possível compreender quais dados, regras e versões produziram determinado resultado.
+
+> **Documentation is part of the product.**  
+> Uma análise que apenas seu autor entende ainda não está pronta.
+
+> **Prefer simple structures.**  
+> Não transformar o Work Brain em um framework antes que exista necessidade real.
+
+---
+
+## 🔐 Segurança e confidencialidade
+
+Os repositórios podem conter conhecimento interno relacionado às operações de contencioso trabalhista.
+
+Nunca devem ser versionados:
+
+- credenciais;
+- API keys;
+- tokens;
+- senhas;
+- arquivos `.env`;
+- dados pessoais desnecessários;
+- documentos processuais completos sem necessidade;
+- informações confidenciais fora do escopo da análise.
+
+Exemplos e testes devem utilizar, sempre que possível, **dados fictícios ou anonimizados**.
+
+---
+
+## 🔮 Componentes compartilhados
+
+Neste estágio, cada repositório de cliente deve ser preferencialmente autocontido.
+
+Não devemos criar abstrações compartilhadas prematuramente.
+
+Quando componentes forem claramente reutilizados entre diversos clientes, poderá surgir:
+
+```text
+work-brain-core
+```
+
+com componentes como:
+
+```text
+MetabaseConnector
+RulesetLoader
+Configuration
+Logging
+Result Models
+CLI Utilities
+```
+
+O `work-brain-core` nunca deverá conter regras específicas de clientes.
+
+---
+
+## 🗺️ Navegação
+
+```mermaid
+flowchart TD
+    HOME["⚖️ Work Brain Trabalhista"]
+
+    HOME --> RULEBOOK["📖 Rulebook"]
+
+    HOME --> ZAMP["🏢 Zamp"]
+    HOME --> B["🏢 Cliente B"]
+    HOME --> C["🏢 Cliente C"]
+
+    ZAMP --> ZR["📐 Ruleset"]
+    ZAMP --> ZA["📊 Analyses"]
+    ZAMP --> ZD["📚 Docs"]
+
+    ZA --> ZA1["Agreement Count"]
+    ZA --> ZA2["Future Analysis"]
+    ZA --> ZA3["Future Analysis"]
+```
 
 ---
 
 <div align="center">
 
-### Work Brain · Trabalhista
+### ⚖️ Work Brain · Trabalhista
 
-**Conhecimento estruturado → regras explícitas → análises reproduzíveis**
+**Contexto → conhecimento estruturado → regras explícitas → análises reproduzíveis**
 
 </div>
