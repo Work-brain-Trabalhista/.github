@@ -331,4 +331,3 @@ Nunca devem ser versionados:
 Exemplos e testes devem utilizar, sempre que possível, **dados fictícios ou anonimizados**.
 
 ---
-
