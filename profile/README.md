@@ -74,9 +74,11 @@ flowchart TD
 
 ## 📚 Documentação
 
+**V2:** [Organization Index](../brain/INDEX.md) · [Standard](../WORK_BRAIN_STANDARD.md) · [Audit](../brain/ORG_AUDIT.md). As métricas e trees ilustrativas abaixo são exemplos arquiteturais; somente as unidades catalogadas no Index foram identificadas no checkout.
+
 A documentação do Work Brain é dividida em dois níveis:
 
-- **[RULEBOOK.md](https://github.com/work-brain-trabalhista/.github/blob/main/RULEBOOK.md)** — arquitetura, convenções e regras para criar clientes, analyses, rulesets, connectors e prompts.
+- **[RULEBOOK.md](https://github.com/work-brain-trabalhista/.github/blob/workbrain/org-v2/RULEBOOK.md)** — arquitetura, convenções e regras para criar clientes, analyses, rulesets, connectors e prompts.
 - **README de cada cliente** — contexto específico, análises disponíveis, fontes de dados e instruções de execução daquele cliente.
 
 > O README desta organização funciona como mapa.  
@@ -90,9 +92,8 @@ Cada cliente possui um repositório próprio e independente.
 
 | Cliente | Repositório | Análises | Status |
 |---|---|---:|---|
-| **Zamp** | [`work-brain-zamp`](https://github.com/work-brain-trabalhista/work-brain-zamp) | 1+ | 🟢 Ativo |
-| **Cliente B** | `work-brain-cliente-b` | — | ⚪ Futuro |
-| **Cliente C** | `work-brain-cliente-c` | — | ⚪ Futuro |
+| **Zamp** | [`work-brain-zamp`](https://github.com/work-brain-trabalhista/work-brain-zamp) | 2 | POC experimental |
+
 
 > O README de cada cliente funciona como índice para todas as análises disponíveis naquele contexto.
 
@@ -103,34 +104,13 @@ Cada cliente possui um repositório próprio e independente.
 A organização segue a estrutura:
 
 ```text
-GitHub Organization · work-brain-trabalhista
-│
-├── .github
-│   ├── RULEBOOK.md
-│   │
-│   └── profile/
-│       └── README.md
-│
-├── work-brain-zamp
-│   ├── README.md
-│   ├── ruleset/
-│   ├── analyses/
-│   ├── prompts/
-│   ├── docs/
-│   └── tests/
-│
-├── work-brain-cliente-b
-│   ├── README.md
-│   ├── ruleset/
-│   ├── analyses/
-│   ├── prompts/
-│   ├── docs/
-│   └── tests/
-│
-└── work-brain-core
-    └── futuro, caso componentes realmente compartilhados
-        entre clientes sejam identificados
+Work-brain-Trabalhista
+├── .github                     # Rulebook, Standard, brain/INDEX.md e perfil
+├── work-brain-zamp             # cliente privado, brain/ e BRAIN.md nas unidades
+└── work-brain-cross            # destino privado, sem itens promovidos
 ```
+
+A árvore representa os repositórios desta entrega; a atualização está preparada na branch `workbrain/org-v2`, sem merge automático. Outros clientes só entram no índice quando existirem. Não há repositório work-brain-index separado.
 
 ### Modelo mental
 
@@ -243,7 +223,7 @@ Qual a exposição financeira?
 Quais processos apresentam maior risco?
 ```
 
-Cada análise deve existir dentro de:
+Para novas unidades, a localização usual é a seguinte. Unidades existentes devem manter seus caminhos reais e receber BRAIN.md junto ao código:
 
 ```text
 analyses/
@@ -444,7 +424,7 @@ zamp-agreement-count/
 
 como um novo repositório.
 
-Para instruções completas sobre criação de análises e novos clientes, consulte o **[Work Brain Rulebook](https://github.com/work-brain-trabalhista/.github/blob/main/RULEBOOK.md)**.
+Para instruções completas sobre criação de análises e novos clientes, consulte o **[Work Brain Rulebook](https://github.com/work-brain-trabalhista/.github/blob/workbrain/org-v2/RULEBOOK.md)**.
 
 ---
 
@@ -489,30 +469,17 @@ Exemplos e testes devem utilizar, sempre que possível, **dados fictícios ou an
 
 ---
 
-## 🔮 Componentes compartilhados
+## 🔮 Memória, descoberta e Cross
 
-Neste estágio, cada repositório de cliente deve ser preferencialmente autocontido.
+Client contém contexto; Index conecta contexto; Cross contém conhecimento reutilizável.
 
-Não devemos criar abstrações compartilhadas prematuramente.
+- Cada unidade relevante possui BRAIN.md com objetivo, regras, decisões, estado e origem.
+- Cada cliente possui Client Brain e Index em brain/, preservando paths reais.
+- [Organization Index](../brain/INDEX.md) permite descobrir unidades e tópicos; verificar acesso antes de carregar contexto privado.
+- Cross começa vazio. Candidatos ficam no cliente; promoção exige validação humana e independência do contexto específico.
+- **PLANEJADO:** agentes pessoais atualizam memória e preparam snapshots com allowlist, denylist, secret scan e revisão de diff. Daily Ingest lerá principalmente BRAIN alterados. Nenhuma automação diária foi implementada.
 
-Quando componentes forem claramente reutilizados entre diversos clientes, poderá surgir:
-
-```text
-work-brain-core
-```
-
-com componentes como:
-
-```text
-MetabaseConnector
-RulesetLoader
-Configuration
-Logging
-Result Models
-CLI Utilities
-```
-
-O `work-brain-core` nunca deverá conter regras específicas de clientes.
+Contratos: [Rulebook](../RULEBOOK.md) e [Work Brain Standard](../WORK_BRAIN_STANDARD.md). A documentação antiga propunha core futuro; o destino controlado desta versão passa a ser Cross, sem extrair componentes prematuramente.
 
 ---
 
@@ -525,16 +492,15 @@ flowchart TD
     HOME --> RULEBOOK["📖 Rulebook"]
 
     HOME --> ZAMP["🏢 Zamp"]
-    HOME --> B["🏢 Cliente B"]
-    HOME --> C["🏢 Cliente C"]
+    HOME --> INDEX["Organization Index"]
+    HOME --> CROSS["Cross: sem promoção"]
 
     ZAMP --> ZR["📐 Ruleset"]
     ZAMP --> ZA["📊 Analyses"]
     ZAMP --> ZD["📚 Docs"]
 
     ZA --> ZA1["Agreement Count"]
-    ZA --> ZA2["Future Analysis"]
-    ZA --> ZA3["Future Analysis"]
+    ZA --> ZA2["Risk Analysis"]
 ```
 
 ---
