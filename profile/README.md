@@ -1,514 +1,136 @@
-<div align="center">
-
 # ⚖️ Work Brain · Trabalhista
 
-### Inteligência, padronização e conhecimento aplicado ao contencioso trabalhista
+**Memória do trabalho, contexto por cliente e descoberta de conhecimento no contencioso trabalhista.**
 
-Organização central de conhecimento, regras e análises trabalhistas estruturadas por cliente.
+O Work Brain organiza o que cada unidade faz, como funciona hoje, quais decisões importam e onde estão suas evidências. Pessoas e agentes conseguem retomar o trabalho pelo `BRAIN.md` da unidade, enquanto os índices permitem descobrir conhecimento sem carregar todos os repositórios.
 
-</div>
+> **Client contém contexto. Index conecta contexto. Cross contém conhecimento reutilizável.**
 
----
+[Brain Index](https://github.com/Work-brain-Trabalhista/.github/blob/main/brain/INDEX.md) · [Rulebook](https://github.com/Work-brain-Trabalhista/.github/blob/main/RULEBOOK.md) · [Padrão Work Brain](https://github.com/Work-brain-Trabalhista/.github/blob/main/WORK_BRAIN_STANDARD.md)
 
-## 🧠 Sobre o Work Brain
-
-O **Work Brain Trabalhista** organiza conhecimento, regras de negócio, fontes de dados e análises relacionadas ao contencioso trabalhista de forma estruturada, reproduzível e específica para cada cliente.
-
-A arquitetura parte de um princípio simples:
-
-> **Cada cliente possui seu próprio contexto e sua própria fonte de verdade.**
-
-Por isso:
-
-- **um repositório representa um cliente;**
-- **um ruleset concentra o conhecimento compartilhado daquele cliente;**
-- **cada análise representa uma pergunta ou problema específico;**
-- **connectors definem como os dados são obtidos;**
-- **prompts definem como modelos de linguagem devem trabalhar, quando aplicável.**
+## Como a arquitetura se organiza
 
 ```mermaid
 flowchart TD
-    A["🏢 Cliente"]
-    B["📐 Ruleset"]
-    D["🔌 Fontes de dados"]
-
-    subgraph C["📊 Análises"]
-        E["Análise A"]
-        F["Análise B"]
-        G["Análise C"]
-    end
-
-    H["📦 Resultados"]
-
-    A -->|"define contexto"| B
-    A -->|"possui"| D
-    A -->|"contém"| C
-
-    B -->|"regras"| E
-    B -->|"regras"| F
-    B -->|"regras"| G
-
-    D -->|"dados"| E
-    D -->|"dados"| F
-    D -->|"dados"| G
-
-    E -->|"gera"| H
-    F -->|"gera"| H
-    G -->|"gera"| H
-
-    classDef client fill:#1f4e79,color:#fff,stroke:#163a5a,stroke-width:1px;
-    classDef ruleset fill:#6a1b9a,color:#fff,stroke:#4a136d,stroke-width:1px;
-    classDef datasource fill:#ef6c00,color:#fff,stroke:#b45309,stroke-width:1px;
-    classDef analysis fill:#1565c0,color:#fff,stroke:#0d47a1,stroke-width:1px;
-    classDef result fill:#2e7d32,color:#fff,stroke:#1b5e20,stroke-width:1px;
-
-    class A client;
-    class B ruleset;
-    class D datasource;
-    class E,F,G analysis;
-    class H result;
+    ORG["Work Brain Trabalhista"] --> INDEX["Brain Index · descoberta"]
+    ORG --> STANDARD["Rulebook e padrão"]
+    INDEX --> CLIENT["Cliente · contexto próprio"]
+    CLIENT --> MEMORY["Client Brain · brain/"]
+    CLIENT --> UNITS["Analyses e workflows"]
+    UNITS --> BRAIN["BRAIN.md · memória da unidade"]
+    INDEX --> CROSS["Cross · capacidades promovidas"]
+    BRAIN -. "candidato + validação humana" .-> CROSS
 ```
 
+| Camada | Papel |
+|---|---|
+| **Client** | Mantém contexto e fonte de verdade em seu repositório |
+| **Ruleset** | Concentra mappings e regras compartilhadas do cliente |
+| **Analysis** | Responde uma pergunta ou produz um cálculo/análise |
+| **Workflow** | Coordena múltiplas etapas ou uma transformação operacional |
+| **Product** | Agrupa analyses/workflows quando existe um produto maior |
+| **BRAIN.md** | Explica objetivo, funcionamento, regras, decisões, estado e evidências da unidade |
+| **Client Brain** | Consolida contexto e mapa local em `brain/` |
+| **Brain Index** | Localiza unidades, tópicos e memórias entre repositórios |
+| **Cross** | Recebe somente capacidades independentes do cliente, após validação humana |
 
----
+Connectors continuam responsáveis pelo acesso aos dados; prompts, pelas instruções de LLM quando necessários. As regras específicas permanecem no cliente.
 
-## 📚 Documentação
+## O que existe hoje
 
-**V2:** [Organization Index](../brain/INDEX.md) · [Standard](../WORK_BRAIN_STANDARD.md) · [Audit](../brain/ORG_AUDIT.md). As métricas e trees ilustrativas abaixo são exemplos arquiteturais; somente as unidades catalogadas no Index foram identificadas no checkout.
+| Repositório | Função | Estado |
+|---|---|---|
+| [`.github`](https://github.com/Work-brain-Trabalhista/.github) | Control plane documental: padrão, Rulebook, auditoria e índice organizacional | Estrutura V2 implementada |
+| [`work-brain-zamp`](https://github.com/Work-brain-Trabalhista/work-brain-zamp) | Primeiro cliente piloto, com memória por unidade e contexto consolidado | POC experimental; privado |
+| [`work-brain-cross`](https://github.com/Work-brain-Trabalhista/work-brain-cross) | Destino controlado para reutilização futura | Estrutura inicial; privado; **0 itens promovidos** |
 
-A documentação do Work Brain é dividida em dois níveis:
-
-- **[RULEBOOK.md](https://github.com/work-brain-trabalhista/.github/blob/workbrain/org-v2/RULEBOOK.md)** — arquitetura, convenções e regras para criar clientes, analyses, rulesets, connectors e prompts.
-- **README de cada cliente** — contexto específico, análises disponíveis, fontes de dados e instruções de execução daquele cliente.
-
-> O README desta organização funciona como mapa.  
-> O Rulebook define como o sistema deve ser construído.
-
----
-
-## 🗂️ Clientes
-
-Cada cliente possui um repositório próprio e independente.
-
-| Cliente | Repositório | Análises | Status |
-|---|---|---:|---|
-| **Zamp** | [`work-brain-zamp`](https://github.com/work-brain-trabalhista/work-brain-zamp) | 2 | POC experimental |
-
-
-> O README de cada cliente funciona como índice para todas as análises disponíveis naquele contexto.
-
----
-
-## 🧩 Arquitetura
-
-A organização segue a estrutura:
+O índice organizacional vive em **`.github/brain/INDEX.md`**. Outros clientes serão catalogados quando existirem.
 
 ```text
 Work-brain-Trabalhista
-├── .github                     # Rulebook, Standard, brain/INDEX.md e perfil
-├── work-brain-zamp             # cliente privado, brain/ e BRAIN.md nas unidades
-└── work-brain-cross            # destino privado, sem itens promovidos
+├── .github
+│   ├── RULEBOOK.md
+│   ├── WORK_BRAIN_STANDARD.md
+│   ├── brain/INDEX.md
+│   ├── brain/ORG_AUDIT.md
+│   └── profile/README.md
+├── work-brain-zamp
+│   ├── brain/CLIENT.md
+│   ├── brain/INDEX.md
+│   ├── brain/CROSS_CANDIDATES.md
+│   └── BRAIN.md junto às unidades existentes
+└── work-brain-cross
+    ├── brain/INDEX.md
+    └── diretórios reservados para capacidades promovidas
 ```
 
-A árvore representa os repositórios desta entrega; a atualização está preparada na branch `workbrain/org-v2`, sem merge automático. Outros clientes só entram no índice quando existirem. Não há repositório work-brain-index separado.
+## ZAMP como primeiro piloto
 
-### Modelo mental
+A POC possui duas analyses: **Agreement Count** e **Risk Analysis**. CLI, conector Metabase e ruleset completam as cinco unidades com memória própria. Nenhum workflow independente foi identificado neste checkout.
+
+- [Client Brain](https://github.com/Work-brain-Trabalhista/work-brain-zamp/blob/main/brain/CLIENT.md): contexto consolidado.
+- [Client Index](https://github.com/Work-brain-Trabalhista/work-brain-zamp/blob/main/brain/INDEX.md): unidades, caminhos e tópicos.
+- [Cross Candidates](https://github.com/Work-brain-Trabalhista/work-brain-zamp/blob/main/brain/CROSS_CANDIDATES.md): sugestões, sem promoção automática.
+
+As regras e os schemas atuais são fictícios; a integração com dados reais ainda não foi comprovada. Esses exemplos não representam resultados de negócio validados.
+
+## Como descobrir conhecimento
 
 ```text
-ORGANIZAÇÃO
-     │
-     └── CLIENTE
-            │
-            ├── RULESET
-            │      conhecimento compartilhado
-            │
-            ├── CONNECTORS
-            │      acesso aos dados
-            │
-            ├── ANALYSES
-            │      ├── pergunta A
-            │      ├── pergunta B
-            │      └── pergunta C
-            │
-            ├── PROMPTS
-            │      instruções para LLMs
-            │
-            └── DOCS
-                   contexto complementar
+Pergunta: “já fizemos algo semelhante?”
+                  ↓
+       Organization Brain Index
+                  ↓
+     encontra unidade e repositório
+                  ↓
+         verifica acesso/permissão
+                  ↓
+     lê somente o BRAIN.md relevante
 ```
 
----
+O índice público contém metadados de descoberta. O contexto privado permanece no repositório de origem, e os links não concedem acesso. Cross não serve como ponte para o contexto de outros clientes.
 
-## 📐 Rulesets
+## Como conhecimento chega a Cross
 
-Cada cliente possui um **ruleset próprio**, que funciona como a fonte estruturada de conhecimento compartilhado entre suas análises.
+Uma capacidade começa como candidato no `brain/CROSS_CANDIDATES.md` do cliente. A avaliação verifica reutilização concreta, dependências específicas, proveniência, contrato, testes e segurança. **Somente após validação humana explícita** ela pode ser promovida para Cross.
 
-O ruleset concentra definições e regras que devem permanecer consistentes independentemente da análise executada.
+Nada da ZAMP foi movido automaticamente. Cross começa vazio; diretórios reservados não são funcionalidades implementadas.
 
-| Categoria | Exemplos |
-|---|---|
-| **Identificação** | aliases, IDs e nomenclaturas do cliente |
-| **Dados** | mappings de campos, normalizações e classificações |
-| **Regras de negócio** | definição de acordo, critérios específicos, políticas |
-| **Thresholds** | limites financeiros, faixas e critérios de decisão |
-| **Classificações** | categorias, tags, prioridades e status |
-| **Exceções** | situações que modificam ou sobrescrevem regras padrão |
+## Agentes pessoais e Daily Ingest
 
-Exemplo:
+**PLANEJADO — ainda não automatizado:**
 
 ```text
-Ruleset Zamp
-     │
-     ├── Agreement Count
-     ├── Average Agreement Value
-     ├── Provision Analysis
-     └── Risk Analysis
+Pessoa trabalha no projeto autorizado
+                  ↓
+Agente pessoal identifica a unidade e atualiza BRAIN.md
+                  ↓
+Gate: allowlist + denylist + secret scan + revisão do diff
+                  ↓
+Commit e snapshot de preservação
+                  ↓
+Daily Ingest lê principalmente BRAIN.md alterados
+                  ↓
+Atualiza Client Brain e Organization Index
+                  ↓
+Sugere relações e candidatos a Cross
 ```
 
-A regra prática é:
-
-> **Se uma definição precisa permanecer igual entre várias análises do mesmo cliente, ela provavelmente pertence ao ruleset.**
-
-### Ruleset não é Analysis
-
-```text
-"Status homologado é considerado acordo."
-                    │
-                    ▼
-                 RULESET
-```
-
-```text
-"Quantos acordos ocorreram?"
-                    │
-                    ▼
-                 ANALYSIS
-```
-
-Também não deve ser confundido com prompt ou connector:
-
-```text
-Ruleset
-→ conhecimento e regras
-
-Analysis
-→ pergunta que queremos responder
-
-Connector
-→ como os dados são obtidos
-
-Prompt
-→ como uma LLM deve trabalhar
-```
-
----
-
-## 📊 Analyses
-
-Uma **analysis** representa uma pergunta, problema ou resultado específico que queremos produzir dentro do contexto de um cliente.
-
-Exemplos:
-
-```text
-Quantos acordos ocorreram?
-
-Qual o valor médio dos acordos?
-
-Qual a taxa de acordo?
-
-Qual o volume de processos?
-
-Qual a exposição financeira?
-
-Quais processos apresentam maior risco?
-```
-
-Para novas unidades, a localização usual é a seguinte. Unidades existentes devem manter seus caminhos reais e receber BRAIN.md junto ao código:
-
-```text
-analyses/
-```
-
-Exemplo:
-
-```text
-work-brain-zamp/
-│
-└── analyses/
-    ├── agreement_count/
-    │   ├── README.md
-    │   └── analysis.py
-    │
-    ├── average_agreement_value/
-    │   ├── README.md
-    │   └── analysis.py
-    │
-    └── risk_analysis/
-        ├── README.md
-        └── analysis.py
-```
-
-Cada análise reutiliza, sempre que aplicável, o mesmo ruleset e a mesma infraestrutura do cliente.
-
----
-
-## 🔌 Connectors
-
-Connectors são responsáveis exclusivamente por acessar fontes de dados.
-
-Exemplos:
-
-```text
-Metabase
-PostgreSQL
-API interna
-CSV
-Google Sheets
-```
-
-O fluxo esperado é:
-
-```mermaid
-flowchart LR
-    A["Fonte de dados"] --> B["Connector"]
-    B --> C["Dados"]
-    C --> D["Ruleset"]
-    D --> E["Analysis"]
-    E --> F["Resultado"]
-```
-
-Um connector deve saber:
-
-> **Como buscar os dados?**
-
-Ele não deve decidir:
-
-> **O que é um acordo?**  
-> **Qual processo é de alto risco?**  
-> **Qual regra específica do cliente deve ser aplicada?**
-
-Essas responsabilidades pertencem ao ruleset e à análise.
-
----
-
-## 🏗️ Estrutura padrão de um cliente
-
-Um repositório deve seguir aproximadamente:
-
-```text
-work-brain-<client>/
-│
-├── README.md
-├── pyproject.toml
-├── .env.example
-├── .gitignore
-│
-├── ruleset/
-│   ├── README.md
-│   └── <client>.yaml
-│
-├── analyses/
-│   ├── README.md
-│   │
-│   ├── analysis_a/
-│   │   ├── README.md
-│   │   └── analysis.py
-│   │
-│   └── analysis_b/
-│       ├── README.md
-│       └── analysis.py
-│
-├── src/
-│   └── work_brain/
-│       ├── config.py
-│       ├── ruleset.py
-│       └── connectors/
-│
-├── prompts/
-│
-├── docs/
-│
-├── fixtures/
-│
-└── tests/
-```
-
-O `README.md` do cliente deve ser o **ponto inicial para qualquer pessoa ou agente que precise trabalhar naquele contexto**.
-
----
-
-## 🧭 Onde cada coisa deve ficar?
-
-| Pergunta | Lugar |
-|---|---|
-| Mudou porque mudou o cliente? | `ruleset/` |
-| Mudou porque mudou a pergunta? | `analyses/` |
-| Mudou porque mudou a fonte de dados? | `connectors/` |
-| É instrução para uma LLM? | `prompts/` |
-| É documentação complementar? | `docs/` |
-| É código realmente compartilhado? | `src/` |
-| É validação de comportamento? | `tests/` |
-
-Em forma resumida:
-
-```text
-Mudou o cliente?
-→ RULESET
-
-Mudou a pergunta?
-→ ANALYSIS
-
-Mudou a fonte?
-→ CONNECTOR
-
-Mudou a instrução para IA?
-→ PROMPT
-
-É explicação?
-→ DOCS
-```
-
----
-
-## 📋 Contrato mínimo de um repositório
-
-Cada cliente deve documentar:
-
-| Área | O que deve estar definido |
-|---|---|
-| **Contexto** | quem é o cliente e qual o contexto da operação |
-| **Ruleset** | conhecimento e regras compartilhadas |
-| **Dados** | fontes, schemas e mappings utilizados |
-| **Análises** | perguntas e soluções disponíveis |
-| **Prompts** | instruções para LLMs, quando aplicável |
-| **Saídas** | estrutura e significado dos resultados |
-| **Validação** | como verificar regras e análises |
-| **Limitações** | situações não contempladas ou que exigem revisão humana |
-
----
-
-## 🚀 Criando uma nova análise
-
-Uma análise nova deve nascer **dentro do repositório do cliente**.
-
-```text
-Cliente
-   ↓
-Problema / pergunta
-   ↓
-Dados
-   ↓
-Ruleset
-   ↓
-Analysis
-   ↓
-Validação
-   ↓
-Resultado
-```
-
-Por exemplo:
-
-```text
-work-brain-zamp/
-│
-└── analyses/
-    └── agreement_count/
-```
-
-e não:
-
-```text
-zamp-agreement-count/
-```
-
-como um novo repositório.
-
-Para instruções completas sobre criação de análises e novos clientes, consulte o **[Work Brain Rulebook](https://github.com/work-brain-trabalhista/.github/blob/workbrain/org-v2/RULEBOOK.md)**.
-
----
-
-## 🧭 Princípios
-
-> **Context before analysis.**  
-> Primeiro entenda o cliente e o contexto. Depois aplique regras e execute a análise.
-
-> **Explicit rules over implicit knowledge.**  
-> Conhecimento importante não deve existir apenas na cabeça de quem escreveu o código.
-
-> **One client, one source of truth.**  
-> As regras compartilhadas de um cliente devem possuir uma fonte de verdade clara.
-
-> **Analyses should be reproducible.**  
-> Deve ser possível compreender quais dados, regras e versões produziram determinado resultado.
-
-> **Documentation is part of the product.**  
-> Uma análise que apenas seu autor entende ainda não está pronta.
-
-> **Prefer simple structures.**  
-> Não transformar o Work Brain em um framework antes que exista necessidade real.
-
----
-
-## 🔐 Segurança e confidencialidade
-
-Os repositórios podem conter conhecimento interno relacionado às operações de contencioso trabalhista.
-
-Nunca devem ser versionados:
-
-- credenciais;
-- API keys;
-- tokens;
-- senhas;
-- arquivos `.env`;
-- dados pessoais desnecessários;
-- documentos processuais completos sem necessidade;
-- informações confidenciais fora do escopo da análise.
-
-Exemplos e testes devem utilizar, sempre que possível, **dados fictícios ou anonimizados**.
-
----
-
-## 🔮 Memória, descoberta e Cross
-
-Client contém contexto; Index conecta contexto; Cross contém conhecimento reutilizável.
-
-- Cada unidade relevante possui BRAIN.md com objetivo, regras, decisões, estado e origem.
-- Cada cliente possui Client Brain e Index em brain/, preservando paths reais.
-- [Organization Index](../brain/INDEX.md) permite descobrir unidades e tópicos; verificar acesso antes de carregar contexto privado.
-- Cross começa vazio. Candidatos ficam no cliente; promoção exige validação humana e independência do contexto específico.
-- **PLANEJADO:** agentes pessoais atualizam memória e preparam snapshots com allowlist, denylist, secret scan e revisão de diff. Daily Ingest lerá principalmente BRAIN alterados. Nenhuma automação diária foi implementada.
-
-Contratos: [Rulebook](../RULEBOOK.md) e [Work Brain Standard](../WORK_BRAIN_STANDARD.md). A documentação antiga propunha core futuro; o destino controlado desta versão passa a ser Cross, sem extrair componentes prematuramente.
-
----
-
-## 🗺️ Navegação
-
-```mermaid
-flowchart TD
-    HOME["⚖️ Work Brain Trabalhista"]
-
-    HOME --> RULEBOOK["📖 Rulebook"]
-
-    HOME --> ZAMP["🏢 Zamp"]
-    HOME --> INDEX["Organization Index"]
-    HOME --> CROSS["Cross: sem promoção"]
-
-    ZAMP --> ZR["📐 Ruleset"]
-    ZAMP --> ZA["📊 Analyses"]
-    ZAMP --> ZD["📚 Docs"]
-
-    ZA --> ZA1["Agreement Count"]
-    ZA --> ZA2["Risk Analysis"]
-```
-
----
-
-<div align="center">
-
-### ⚖️ Work Brain · Trabalhista
-
-**Contexto → conhecimento estruturado → regras explícitas → análises reproduzíveis**
-
-</div>
+O agente atua no projeto autorizado, registra decisões com origem e prepara preservação segura. Promoções para Cross e mudanças institucionais exigem avaliação explícita. Nenhuma rotina noturna ou snapshot automático foi implementado nesta fase.
+
+## Princípios e segurança
+
+- **Contexto antes da análise:** entender o cliente antes de interpretar dados.
+- **Regras explícitas:** manter uma fonte de verdade e preservar proveniência.
+- **Reprodutibilidade:** registrar dados, regras, versões e limitações.
+- **Memória concisa:** diferenciar IMPLEMENTADO, PLANEJADO e HIPÓTESE / DISCUSSÃO; não inventar informação.
+- **Caminhos preservados:** primeiro fazer o Brain entender o código existente.
+- **Confidencialidade:** nunca versionar credenciais, `.env`, dados pessoais desnecessários, dumps ou documentos processuais sem necessidade. Exemplos devem ser fictícios ou anonimizados.
+
+## Documentação
+
+- [Rulebook](https://github.com/Work-brain-Trabalhista/.github/blob/main/RULEBOOK.md): responsabilidades, descoberta, promoção e segurança.
+- [Work Brain Standard](https://github.com/Work-brain-Trabalhista/.github/blob/main/WORK_BRAIN_STANDARD.md): contrato de memória e índices.
+- [Organization Index](https://github.com/Work-brain-Trabalhista/.github/blob/main/brain/INDEX.md): catálogo atual.
+- [Organization Audit](https://github.com/Work-brain-Trabalhista/.github/blob/main/brain/ORG_AUDIT.md): diagnóstico que orientou a adaptação.
+- [Guia de arquitetura do cliente](https://github.com/Work-brain-Trabalhista/.github/blob/main/docs/CLIENT_ARCHITECTURE_GUIDE.md): regras, análises, connectors e convenções técnicas preservadas da documentação anterior.
